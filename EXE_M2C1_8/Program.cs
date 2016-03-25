@@ -9,55 +9,101 @@ namespace EXE_M2C1_8
     class Program
     {
 
-        public static List<ContaCorrente> InserirCliente()
+        static void Main(string[] args)
         {
-            int i = 0;
+            OperacaoBancaria operacao = new OperacaoBancaria();
 
-            List<ContaCorrente> cc = new List<ContaCorrente>();
+            string login = "1 - Fazer login   " +
+                           "2 - Cadastrar Contas";
+
+            string menuRaiz = "1 - Transferência   " +
+                              "2 - Depósito   " +
+                              "3 - Saque   " +
+                              "4 - Saldo   " +
+                              "5 - Outros   " +
+                              "9 - Sair";
+
+            string menuOutros = "1 - Cadastrar Cliente   " +
+                                "2 - Operações em lote   " +
+                                "9 - Voltar";
+
+            List<ContaCorrente> cadastroCC = new List<ContaCorrente>();
+            int Conta = 0;
+            int nOpcao = 0;
 
             do
             {
-                Console.WriteLine("Digite o nome");
-                string p_nome = Console.ReadLine();
 
-                Console.WriteLine("Digite o número da conta");
-                int p_numConta = int.Parse(Console.ReadLine());
+                Console.WriteLine(login);
+                nOpcao = int.Parse(Console.ReadLine());
+                switch (nOpcao)
+                {
+                    case 1:
+                        Conta = operacao.Logar(cadastroCC);
+                        break;
+                    case 2:
+                        cadastroCC.Add(operacao.cadastrarCC());
+                        break;
+                }
+            } while (nOpcao != 1);
 
-                Console.WriteLine("Digite o saldo da conta");
-                decimal p_saldo = decimal.Parse(Console.ReadLine());
+            ContaCorrente ccCliente = new ContaCorrente(cadastroCC[Conta]);
 
-                cc.Add(new ContaCorrente(new Cliente(p_nome, 0), p_numConta));
-                cc[i].saldo = p_saldo;
+            do
+            {
+                Console.WriteLine(menuRaiz);
+                nOpcao = int.Parse(Console.ReadLine());
 
-                i++;
-            } while (i <= 3);
+                switch (nOpcao)
+                {
+                    case 1:
+                        operacao.Transferencia(cadastroCC, ccCliente);
+                        break;
+                    case 2:
+                        operacao.Deposito(ccCliente);
+                        break;
+                    case 3:
+                        operacao.Saque(ccCliente);
+                        break;
+                    case 4:
+                        operacao.Saldo(ccCliente);
+                        break;
+                    case 5:
+                        do
+                        {
+                            Console.WriteLine(menuOutros);
+                            nOpcao = int.Parse(Console.ReadLine());
 
-            return cc;
-        }
+                        } while (nOpcao != 9);
+                        break;
 
 
-        static void Main(string[] args)
-        {
-            List<ContaCorrente> cc = new List<ContaCorrente>();
 
-            cc = InserirCliente();
-            cc.Sort();
 
-            Console.WriteLine("Qtd. operações realizadas");
+
+                    default
+                        nOpcao = 9;
+                }
+
+
+            } while (nOpcao != 9);
+
+
+
+
+
+                Console.WriteLine("Qtd. operações realizadas");
             int qtdOperacoes = int.Parse(Console.ReadLine());
 
             for (int i = 1; i <= qtdOperacoes; i++)
             {
-                Console.WriteLine("Número da Conta");
-                int numConta = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("Tipo de Operação");
-                string tpOperacao = Console.ReadLine();
 
                 Console.WriteLine("Valor");
                 decimal valor = decimal.Parse(Console.ReadLine());
 
                 int index = cc.FindIndex(c => c.numConta.Equals(numConta));
+
                 decimal p_saldo = cc[index].saldo;
 
                 if (tpOperacao.Equals("C"))
@@ -72,6 +118,14 @@ namespace EXE_M2C1_8
 
                 cc[index].saldo = p_saldo;
             }
+
+            foreach (var conta in cc)
+            {
+                Console.WriteLine("Titular : {0}", conta.dono.nome);
+                Console.WriteLine("Conta : {0}", conta.numConta);
+                Console.WriteLine("Saldo : {0}", conta.saldo);
+            }
+
 
 
         }

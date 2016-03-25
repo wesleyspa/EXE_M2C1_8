@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EXE_M2C1_8
+﻿namespace EXE_M2C1_8
 {
-    class Cliente
+    public class Cliente
     {
-        public Cliente(string p_nome, int p_idade)
+        public Cliente(string p_nome)
         {
             this.nome = p_nome;
-            this.idade = p_idade;
         }
 
         private string _nome;
@@ -24,19 +17,6 @@ namespace EXE_M2C1_8
             set
             {
                 this._nome = value;
-            }
-        }
-
-        private int _idade;
-        public int idade
-        {
-            get
-            {   
-                return this._idade;
-            }
-            set
-            {
-                this._idade = value;
             }
         }
 

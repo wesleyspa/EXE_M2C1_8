@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EXE_M2C1_8
+﻿namespace EXE_M2C1_8
 {
-    class ContaCorrente
+    public class ContaCorrente : OperacaoBancaria
     {
+
+        public ContaCorrente(ContaCorrente clone)
+        {
+        }
+
         public ContaCorrente(Cliente p_dono, int p_numConta)
         {
             this.dono = p_dono;
             this._numConta = p_numConta;
         }
 
-        
+
+        public ContaCorrente Clone()
+        {
+            return new ContaCorrente(this);
+        }
+
+
         public decimal saldo { get; set; }
 
         private Cliente _dono;
@@ -42,12 +47,7 @@ namespace EXE_M2C1_8
                 this._numConta = value;
             }
         }
-       
 
-        public void GetSaldo()
-        {
-            Console.WriteLine("Saldo da conta {0}", this._saldo);           
-        }
+
     }
 }
- 
